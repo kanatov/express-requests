@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import Time from "./Time/Time";
-import Counter from "./Counter/Counter";
+
 const URI_TIME = "http://localhost:3100/api/time";
 
-function App() {
+function Time() {
   const [counts, setCounts] = useState("no counts");
-  const getCounts = async () => {
+  const getTime = async () => {
     try {
       const response = await fetch(URI_TIME);
       const data = await response.json();
@@ -14,13 +13,16 @@ function App() {
       console.error(e);
     }
   };
+  useEffect(() => {
+    getTime();
+  }, []);
   return (
-    <>
-      <h1>Widgets</h1>
-      <Time />
-      <Counter />
-    </>
+    <section className="section">
+      <h2>Time</h2>
+      <pre>{JSON.stringify(counts)}</pre>
+      <button onClick={getTime}>Refresh</button>
+    </section>
   );
 }
 
-export default App;
+export default Time;
