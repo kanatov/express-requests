@@ -1,26 +1,35 @@
 import { useState, useEffect } from "react";
 
-const URI_COUNTER = "http://localhost:3100/api/counters";
+const URI = "http://localhost:3100/api/counters";
 
 function Counter() {
-  const [counts, setCounts] = useState("no counts");
-  const getTime = async () => {
+  const [counts, setCounts] = useState(null);
+  const refresh = async () => {
     try {
-      const response = await fetch(`${URI_COUNTER}/counter-1`);
+      const response = await fetch(`${URI}/${inputVal}`);
       const data = await response.json();
-      setCounts(data.result);
+      if (data?.result) setCounts(data.result);
+      else setCounts(`No counter with ID: ${inputVal}`);
     } catch (e) {
       console.error(e);
     }
   };
-  useEffect(() => {
-    getTime();
-  }, []);
+  const [inputVal, setInputVal] = useState("");
+  function inputHandler(e) {
+    if (
+      !e.target.value ||
+      new RegExp("^[A-Za-z0-9-]+$", "g").test(e.target.value)
+    )
+      setInputVal(e.target.value);
+  }
   return (
     <section className="section">
-      <h2>Time</h2>
-      <pre>{JSON.stringify(counts)}</pre>
-      <button onClick={getTime}>Refresh</button>
+      <h2>Counter</h2>
+      <p>
+        Counter id: <input onChange={inputHandler} value={inputVal} />
+      </p>
+      <button onClick={refresh}>Get counter</button>
+      {counts !== null && <pre>{counts}</pre>}
     </section>
   );
 }

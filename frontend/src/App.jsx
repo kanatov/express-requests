@@ -1,25 +1,42 @@
-import { useState, useEffect } from "react";
+import { Link } from "react-router";
+import { Routes, Route, Outlet } from "react-router";
+
 import Time from "./Time/Time";
 import Counter from "./Counter/Counter";
-const URI_TIME = "http://localhost:3100/api/time";
+import Counters from "./Counters/Counters";
 
-function App() {
-  const [counts, setCounts] = useState("no counts");
-  const getCounts = async () => {
-    try {
-      const response = await fetch(URI_TIME);
-      const data = await response.json();
-      setCounts(data.result);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+function Layout() {
   return (
     <>
       <h1>Widgets</h1>
-      <Time />
-      <Counter />
+      <header>
+        <ul>
+          <li>
+            <Link to={"/"}>Timer</Link>
+          </li>
+          <li>
+            <Link to={"/counters"}>All counters</Link>
+          </li>
+          <li>
+            <Link to={"/counter"}>Counter</Link>
+          </li>
+        </ul>
+      </header>
+      <main>
+        <Outlet />
+      </main>
     </>
+  );
+}
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Time />} />
+        <Route path="counters" element={<Counters />} />
+        <Route path="counter" element={<Counter />} />
+      </Route>
+    </Routes>
   );
 }
 

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
-const URI_TIME = "http://localhost:3100/api/time";
+const URI = "http://localhost:3100/api/counters";
 
-function Time() {
-  const [counts, setCounts] = useState("no counts");
+function Counter() {
+  const [counters, setCounters] = useState("no counters");
   const refresh = async () => {
     try {
-      const response = await fetch(URI_TIME);
+      const response = await fetch(URI);
       const data = await response.json();
-      setCounts(data.result);
+      setCounters(data.result);
     } catch (e) {
       console.error(e);
     }
@@ -18,11 +18,11 @@ function Time() {
   }, []);
   return (
     <section className="section">
-      <h2>Time</h2>
-      <pre>{JSON.stringify(counts)}</pre>
+      <h2>All counters</h2>
       <button onClick={refresh}>Refresh</button>
+      <pre>{JSON.stringify(counters, undefined, 2)}</pre>
     </section>
   );
 }
 
-export default Time;
+export default Counter;
