@@ -15,10 +15,10 @@ function Layout() {
             <Link to={"/"}>Timer</Link>
           </li>
           <li>
-            <Link to={"/counters"}>All counters</Link>
+            <Link to={"/counter"}>Counter</Link>
           </li>
           <li>
-            <Link to={"/counter"}>Counter</Link>
+            <Link to={"/counters"}>All counters</Link>
           </li>
         </ul>
       </header>

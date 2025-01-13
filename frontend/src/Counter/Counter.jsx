@@ -4,7 +4,7 @@ const URI = "http://localhost:3100/api/counters";
 
 function Counter() {
   const [counts, setCounts] = useState(null);
-  const [inputVal, setInputVal] = useState("");
+  const [inputID, setInputID] = useState("");
   const [displayID, setDisplayID] = useState("");
   const [UIState, setUIState] = useState("empty");
 
@@ -25,15 +25,15 @@ function Counter() {
       console.error(e);
     }
   }
-  async function refresh() {
-    if (!inputVal) {
+  async function refresh(id = inputID) {
+    if (!id) {
       setUIState("empty");
       return;
     }
     try {
-      const response = await fetch(`${URI}/${inputVal}`);
+      setDisplayID(id);
+      const response = await fetch(`${URI}/${id}`);
       const data = await response.json();
-      setDisplayID(inputVal);
       if (!isNaN(parseInt(data?.result))) {
         setCounts(data.result);
         setUIState("valid");
@@ -48,22 +48,56 @@ function Counter() {
 
   function inputHandler(e) {
     if (!e.target.value) {
-      setInputVal(e.target.value);
+      setInputID(e.target.value);
       return;
     }
     const newVal = e.target.value.trim().slice(0, 12);
-    if (new RegExp("^[A-Za-z0-9-]+$", "g").test(newVal)) setInputVal(newVal);
+    if (new RegExp("^[A-Za-z0-9-]+$", "g").test(newVal)) setInputID(newVal);
   }
 
-  function decrease(e) {}
-  function increase(e) {}
+  async function decrease(e) {
+    if (counts - 1 < 0) return;
+    try {
+      const response = await fetch(`${URI}/${displayID}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: displayID, val: counts - 1 }),
+      });
+      const data = await response.json();
+      if (!isNaN(parseInt(data?.result))) refresh(displayID);
+      else setUIState("create-error");
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  async function increase(e) {
+    if (counts + 1 > 10) return;
+    try {
+      const response = await fetch(`${URI}/${displayID}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: displayID, val: counts + 1 }),
+      });
+      const data = await response.json();
+      if (!isNaN(parseInt(data?.result))) refresh(displayID);
+      else setUIState("create-error");
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
     <section className="section">
       <h2>Counter</h2>
       <p>
-        ID: <input onChange={inputHandler} value={inputVal} />
+        ID: <input onChange={inputHandler} value={inputID} />
       </p>
-      <button onClick={refresh}>Check</button>
+      <button onClick={() => refresh()}>Check</button>
       {UIState === "valid" && (
         <>
           <pre>{`{ "${displayID}": ${counts} }`}</pre>

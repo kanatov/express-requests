@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const counter = require("./tools/counter");
 const counterNameValidation = require("./tools/counterNameValidation");
 const app = express();
 const PORT = 3100;
@@ -31,16 +30,41 @@ app.get("/api/counters/:id", async (req, res) => {
 // POST new counter
 app.post("/api/counters", async (req, res) => {
   const { id } = req.body;
-  if (counters.has(id)) {
-    res.status(400).json({ error: `Existing counter with ID: ${id}` });
-    return;
-  }
   if (!counterNameValidation(id)) {
     res.status(400).json({ error: `Invalid ID name: ${id}` });
     return;
   }
+  if (counters.has(id)) {
+    res.status(400).json({ error: `Existing counter with ID: ${id}` });
+    return;
+  }
   counters.set(id, 1);
   res.json({ message: "ok", result: id });
+});
+
+// PUT update to counter
+app.put("/api/counters/:id", async (req, res) => {
+  const { id } = req.params;
+  const { val } = req.body;
+  if (!counterNameValidation(id)) {
+    res.status(400).json({ error: `Invalid ID name: ${id}` });
+    return;
+  }
+  if (!counters.has(id)) {
+    res.status(400).json({ error: `No counters with ID: ${id}` });
+    return;
+  }
+  if (val < 0 || val > 10) {
+    res.status(400).json({ error: `Value out of range: ${val}` });
+    return;
+  }
+  counters.set(id, val);
+  res.json({ message: "ok", result: val });
+});
+
+// Bad request handling
+app.all("*", function (req, res) {
+  res.status(500).json({ error: "Bad request" });
 });
 
 app.listen(PORT, async () => {

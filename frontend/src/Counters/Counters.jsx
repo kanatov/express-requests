@@ -20,7 +20,7 @@ function Counter() {
     <section className="section">
       <h2>All counters</h2>
       <button onClick={refresh}>Refresh</button>
-      <pre>{JSON.stringify(counters, undefined, 2)}</pre>
+      <pre>{JSON.stringify(counters, null, 2)}</pre>
     </section>
   );
 }
