@@ -1,3 +1,4 @@
+process.title = "backend";
 const express = require("express");
 const cors = require("cors");
 const counterNameValidation = require("./tools/counterNameValidation");
@@ -62,11 +63,26 @@ app.put("/api/counters/:id", async (req, res) => {
   res.json({ message: "ok", result: val });
 });
 
+app.post("/api/exit", async (req, res) => {
+  res.send("Bye!");
+  server.close(() => {
+    console.log("Server terminated.\n");
+    process.exit(0);
+  });
+});
+
 // Bad request handling
 app.all("*", function (req, res) {
   res.status(500).json({ error: "Bad request" });
 });
 
-app.listen(PORT, async () => {
+const server = app.listen(PORT, async () => {
   console.log(`Backend is running on http://localhost:${PORT}`);
+});
+
+process.on("SIGTERM", () => {
+  server.close(() => {
+    console.log("Server terminated.\n");
+    process.exit(0);
+  });
 });

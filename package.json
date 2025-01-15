@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "/",
   "scripts": {
-    "install": "npm-run-all install:frontend install:backend build",
+    "install": "concurrently \"npm:install:*\" build",
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
     "dev": "concurrently \"npm:dev:*\"",
@@ -13,7 +13,9 @@
     "build:frontend": "cd frontend && npm run build",
     "start": "concurrently \"npm:start:*\"",
     "start:frontend": "cd frontend && npm run start",
-    "start:backend": "cd backend && npm start"
+    "start:backend": "cd backend && npm start",
+    "test": "concurrently \"npm:start:backend\" \"npm:test:backend\"",
+    "test:backend": "cd backend && npm run test"
   },
   "author": "Ilya Kanatov",
   "license": "ISC",
