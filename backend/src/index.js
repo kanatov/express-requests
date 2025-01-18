@@ -79,6 +79,15 @@ app.all("*", function (req, res) {
 const server = app.listen(PORT, async () => {
   console.log(`Backend is running on http://localhost:${PORT}`);
 });
+// Exit function for Jest tests
+const exit = () => {
+  return new Promise((resolve, reject) => {
+    server.close((err) => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
+};
 
 process.on("SIGTERM", () => {
   server.close(() => {
@@ -86,3 +95,5 @@ process.on("SIGTERM", () => {
     process.exit(0);
   });
 });
+
+module.exports = { app, exit };
