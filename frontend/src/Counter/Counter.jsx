@@ -91,6 +91,21 @@ function Counter() {
       console.error(e);
     }
   }
+  async function deleteCounter(e) {
+    try {
+      fetch(`${URI}/${displayID}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then(() => {
+        refresh(displayID);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
     <section className="section">
       <h2>Counter</h2>
@@ -103,6 +118,8 @@ function Counter() {
           <pre>{`{ "${displayID}": ${counts} }`}</pre>
           <button onClick={decrease}>–</button>
           <button onClick={increase}>+</button>
+          <br />
+          <button onClick={deleteCounter}>delete</button>
         </>
       )}
       {UIState === "empty" && <p>Enter counter ID</p>}

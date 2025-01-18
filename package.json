@@ -14,8 +14,8 @@
     "start": "concurrently \"npm:start:*\"",
     "start:frontend": "cd frontend && npm run start",
     "start:backend": "cd backend && npm start",
-    "test": "concurrently \"npm:start:backend\" \"npm:test:backend\"",
-    "test:backend": "cd backend && npm run test"
+    "test": "concurrently \"npm:test:backend\"",
+    "test:backend": "cd backend && npm run jesttest"
   },
   "author": "Ilya Kanatov",
   "license": "ISC",

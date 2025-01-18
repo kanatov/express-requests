@@ -10,22 +10,22 @@ app.use(express.json());
 
 // GET time
 app.get("/api/time", async (req, res) => {
-  res.json({ message: "ok", result: new Date().toUTCString() });
+  res.status(200).json({ message: "ok", result: new Date().toUTCString() });
 });
 
 // GET counters
 const counters = new Map();
 
 app.get("/api/counters", async (req, res) => {
-  res.json({ message: "ok", result: Object.fromEntries(counters) });
+  res.status(200).json({ message: "ok", result: Object.fromEntries(counters) });
 });
 
 // GET counter ID
 app.get("/api/counters/:id", async (req, res) => {
   const id = req.params.id;
   if (counterNameValidation(id) && counters.has(id))
-    res.json({ message: "ok", result: counters.get(id) });
-  else res.status(400).json({ error: `No counters with ID: ${id}` });
+    res.status(200).json({ message: "ok", result: counters.get(id) });
+  else res.status(404).json({ error: `No counters with ID: ${id}` });
 });
 
 // POST new counter
@@ -36,11 +36,11 @@ app.post("/api/counters", async (req, res) => {
     return;
   }
   if (counters.has(id)) {
-    res.status(400).json({ error: `Existing counter with ID: ${id}` });
+    res.status(409).json({ error: `Existing counter with ID: ${id}` });
     return;
   }
   counters.set(id, 1);
-  res.json({ message: "ok", result: id });
+  res.status(201).json({ message: "ok", result: id });
 });
 
 // PUT update to counter
@@ -60,7 +60,22 @@ app.put("/api/counters/:id", async (req, res) => {
     return;
   }
   counters.set(id, val);
-  res.json({ message: "ok", result: val });
+  res.status(202).json({ message: "ok", result: val });
+});
+
+// DELETE a counter
+app.delete("/api/counters/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!counterNameValidation(id)) {
+    res.status(400).json({ error: `Invalid ID name: ${id}` });
+    return;
+  }
+  if (!counters.has(id)) {
+    res.status(400).json({ error: `No counters with ID: ${id}` });
+    return;
+  }
+  counters.delete(id);
+  res.status(202).json({ message: "ok", result: id });
 });
 
 app.post("/api/exit", async (req, res) => {
