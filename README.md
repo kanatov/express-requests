@@ -44,11 +44,18 @@ frontend runs on http://localhost:4173
 
 Runs both the frontend and backend in development mode.
 
-### 4. Make a production build:
+### 4. Run tests:
+
+`npm run test`
+
+Runs expected requests and error handling tests.
+
+### 5. Make a production build:
 
 `npm run build`
 
 Builds the react project.
+
 
 # Counters collection schema
 
