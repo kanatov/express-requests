@@ -8,6 +8,8 @@ Project includes:
 - Basic web interface done with React
 - Integration tests done with Jest and Supertest
 
+![image](https://github.com/user-attachments/assets/938a5eb5-a23c-4737-a9fa-4d3b7352f3b7)
+
 Supported API endpoints:
 
 - Create a named counter
