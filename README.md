@@ -31,7 +31,7 @@ Run the project from the root dirrectory:
 | 2. Start backend and frontend | `npm run start` | Starts both the frontend and backend in production mode. |
 |                               |                 | backend runs on http://localhost:3100                    |
 |                               |                 | frontend runs on http://localhost:4173                   |
-| 3. Run development Mode       | `npm run dev`   | Runs both the frontend and backend in development mode.  |
+| 3. Run development mode       | `npm run dev`   | Runs both the frontend and backend in development mode.  |
 | 4. Run tests                  | `npm run test`  | Runs expected requests and error handling tests.         |
 | 5. Make a production build    | `npm run build` | Builds the react project.                                |
 
