@@ -25,45 +25,23 @@ All the routes include error prevention and data validation.
 
 Run the project from the root dirrectory:
 
-### 1. Install All Dependencies:
-
-`npm install`
-
-### 2. Start backend and frontend to view the project:
-
-`npm run start`
-
-Starts both the frontend and backend in production mode.
-
-backend runs on http://localhost:3100
-frontend runs on http://localhost:4173
-
-### 3. Run development Mode:
-
-`npm run dev`
-
-Runs both the frontend and backend in development mode.
-
-### 4. Run tests:
-
-`npm run test`
-
-Runs expected requests and error handling tests.
-
-### 5. Make a production build:
-
-`npm run build`
-
-Builds the react project.
-
+| Case                          | Command         | Description                                              |
+| ----------------------------- | --------------- | -------------------------------------------------------- |
+| 1. Install All Dependencies   | `npm install`   | Install all necessary dependencies.                      |
+| 2. Start backend and frontend | `npm run start` | Starts both the frontend and backend in production mode. |
+|                               |                 | backend runs on http://localhost:3100                    |
+|                               |                 | frontend runs on http://localhost:4173                   |
+| 3. Run development Mode       | `npm run dev`   | Runs both the frontend and backend in development mode.  |
+| 4. Run tests                  | `npm run test`  | Runs expected requests and error handling tests.         |
+| 5. Make a production build    | `npm run build` | Builds the react project.                                |
 
 # Counters collection schema
 
 The counters values are mapped to the names:
 
-| ID (name)      | Value    |
-| ---------- | ------- | 
-| Characters, numbers and dashes | Numeric value: 0-10  | 
+| ID (name)                      | Value               |
+| ------------------------------ | ------------------- |
+| Characters, numbers and dashes | Numeric value: 0-10 |
 
 # API routes
 
@@ -72,7 +50,9 @@ The counters values are mapped to the names:
 ```
 GET http://localhost:3100/api/time
 ```
+
 Response
+
 ```
 {
     "message": "ok",
@@ -85,7 +65,9 @@ Response
 ```
 GET http://localhost:3100/api/counters
 ```
+
 Response
+
 ```
 {
     "message": "ok",
@@ -101,7 +83,9 @@ Response
 ```
 GET http://localhost:3100/api/counters/:id
 ```
+
 Response
+
 ```
 {
     message: "ok",
@@ -119,7 +103,9 @@ POST http://localhost:3100/api/counters
     id: "delta"
 }
 ```
+
 Response
+
 ```
 {
     message: "ok",
@@ -138,7 +124,9 @@ PUT http://localhost:3100/api/counters/:id
     "val": 5
 }
 ```
+
 Response
+
 ```
 {
     "message": "ok",
@@ -151,7 +139,9 @@ Response
 ```
 DELETE http://localhost:3100/api/counters/:id
 ```
+
 Response
+
 ```
 {
     "message": "ok",
