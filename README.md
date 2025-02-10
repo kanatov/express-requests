@@ -6,7 +6,7 @@ Project includes:
 
 - API routes made with Express.js
 - Basic web interface done with React
-- Integration tests done with Jest and Supertest
+- Integration tests done with Jest
 
 ![image](https://github.com/user-attachments/assets/938a5eb5-a23c-4737-a9fa-4d3b7352f3b7)
 
